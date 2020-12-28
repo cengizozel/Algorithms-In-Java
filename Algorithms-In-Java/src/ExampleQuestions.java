@@ -38,20 +38,20 @@ public class ExampleQuestions {
 	public static int answer_q1_1(int arr[], int i, int count, int val) {
 		
 		// end of array
-		if(i == arr.length)
-		return val;
-		  
+		if(i == arr.length) {
+			return val;
+		}
+		
 		// step 1: check for consecutive count
 		if(count == 2) {
-		// step 2a: current element cannot be taken
-		// => skip and move to next item and reset count
-		return answer_q1_1(arr, i+1, 0, val);
+			// step 2a: current element cannot be taken
+			// => skip and move to next item and reset count
+			return answer_q1_1(arr, i+1, 0, val);
 		}
+		
 		// step 2b: else there are can be 2 cases (decide to take the item or not)
 		// step 3: max of the 2 decisions
 		return Math.max(answer_q1_1(arr, i+1, count+1, val+arr[i]), answer_q1_1(arr, i+1, 0, val));
-		// int val1 = func(arr, i+1, count+1, val+arr[i]);
-		// int val2 = func(arr, i+1, 0, val);
 		}
 	
 	public static void q1_2() {
