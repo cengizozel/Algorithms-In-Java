@@ -24,18 +24,18 @@ public class ExampleQuestions {
 		
 	   int arr1[] = {5, 5, 8, 5, 5};
 	   System.out.println("Input: " + Arrays.toString(arr1));
-	   System.out.println("Sum = " + answer_q1_1(arr1, 0, 0, 0));
+	   System.out.println("Sum = " + answerQ1_1(arr1, 0, 0, 0));
 	   
 	   int arr2[] = {5, 5, 12, 5, 5};
 	   System.out.println("Input: " + Arrays.toString(arr2));
-	   System.out.println("Sum = " + answer_q1_1(arr2, 0, 0, 0));
+	   System.out.println("Sum = " + answerQ1_1(arr2, 0, 0, 0));
 	   
 	   int arr3[] = {1, 2, 2, 1, 2, 1, 2, 5, 5};
 	   System.out.println("Input: " + Arrays.toString(arr3));
-	   System.out.println("Sum = " + answer_q1_1(arr3, 0, 0, 0));
+	   System.out.println("Sum = " + answerQ1_1(arr3, 0, 0, 0));
 	}
 	
-	public static int answer_q1_1(int arr[], int i, int count, int val) {
+	public static int answerQ1_1(int arr[], int i, int count, int val) {
 		
 		// end of array
 		if(i == arr.length) {
@@ -46,12 +46,12 @@ public class ExampleQuestions {
 		if(count == 2) {
 			// step 2a: current element cannot be taken
 			// => skip and move to next item and reset count
-			return answer_q1_1(arr, i+1, 0, val);
+			return answerQ1_1(arr, i+1, 0, val);
 		}
 		
 		// step 2b: else there are can be 2 cases (decide to take the item or not)
 		// step 3: max of the 2 decisions
-		return Math.max(answer_q1_1(arr, i+1, count+1, val+arr[i]), answer_q1_1(arr, i+1, 0, val));
+		return Math.max(answerQ1_1(arr, i+1, count+1, val+arr[i]), answerQ1_1(arr, i+1, 0, val));
 		}
 	
 	public static void q1_2() {
@@ -59,15 +59,55 @@ public class ExampleQuestions {
 		System.out.println("We are given an n × n array A of zeros and ones.");
 		System.out.println("We want to find the size of the largest " + 
 				"contiguous all-ones square. ");
-		System.out.println("Give an O(n^2)-time algorithm for the problem.");
-
-		answer_q1_2();
-	}
-	
-	public static void answer_q1_2() {
+		System.out.println("Give an O(n^2)-time algorithm for the problem.\n");
 		
+		int matrix[][] = {{1, 1, 1, 1, 0}, {1, 1, 1, 0, 1}, {1, 1, 1, 0, 1}, {1, 0, 1, 1, 0}, {0, 0, 1, 1, 0}};
+		int n = matrix.length;
+		System.out.println("     Input");
+		
+		for (int i = 0; i < n; i++) {
+			System.out.println(Arrays.toString(matrix[i]));
+		}
 		System.out.println();
 		
+		int buildMatrix[][] = new int[n][n];
+		
+		answerQ1_2(matrix, buildMatrix, n);
+	}
+	
+	public static void answerQ1_2(int[][] matrix, int[][] bm, int r) {
+		
+		int c = r;
+		
+		// Set first column and row
+		for (int i = 0; i < r; i++) {
+			bm[0][i] = matrix[0][i];
+			bm[i][0] = matrix[i][0];
+		}
+		
+		for (int i = 1; i < r; i++) {
+			for (int j = 1; j < c; j++) {
+				
+				if (matrix[i][j] == 1) {
+					int num1 = bm[i][j-1];
+					int num2 = bm[i-1][j];
+					int num3 = bm[i-1][j-1];
+
+					bm[i][j] = 1 + Math.min(num1, Math.min(num2, num3));
+				}
+			}
+		}
+		
+		int max = 0;
+		
+		for (int i = 1; i < r; i++) {
+			for (int j = 1; j < c; j++) {
+				if (bm[i][j] > max) {
+					max = bm[i][j];
+				}
+			}
+		}
+		System.out.println("Maximum size is " + Integer.toString(max) + ".");
 	}
 	
 	public static void q1_3() {
@@ -94,15 +134,11 @@ public class ExampleQuestions {
 				"we require max S = j and maxZ = k (if j = k then we let T[j, k] = -inf).");
 		System.out.println("Give an expression (or a piece of code) to compute T[j, k] from smaller subproblems. Argue why your expressionis correct.");
 		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
 		
-		answer_q1_3();
+		answerQ1_3();
 	}
 	
-	public static void answer_q1_3() {
+	public static void answerQ1_3() {
 		
 		System.out.println("");
 		
